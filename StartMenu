@@ -1,0 +1,67 @@
+public StartMenu() {
+
+		setResizable(false);
+		setTitle("1% DE POSIBILIDAD 99% DE FE");
+		setBounds(125,0,1300,820);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		user = new Character();
+		user.setOpaque(false);
+		
+		bot = new Character();
+		bot.setOpaque(false);
+	
+		choosechar = new JButton("Choose character");
+		choosechar.addActionListener(this);
+		
+		chooseweap = new JButton("Choose weapon");
+		chooseweap.addActionListener(this);
+		
+		rank = new JButton("Ranking");
+		
+		top_buttons = new JPanel();
+		top_buttons.setOpaque(false);
+		top_buttons.setPreferredSize(new Dimension(800,50));
+		top_buttons.add(choosechar);
+		top_buttons.add(chooseweap);
+		top_buttons.add(rank);
+		
+		center_general = new JPanel();
+		center_general.setOpaque(false);
+		center_general.setLayout(new BoxLayout(center_general, BoxLayout.X_AXIS));
+		center_general.add(user);
+		center_general.add(Box.createHorizontalStrut(125));
+		center_general.add(bot);
+		
+		fight = new JButton("Fight");
+	    fight.addActionListener(this);
+	    
+		clconsole = new JButton("Clear console");
+		clconsole.addActionListener(this);
+		
+		bottom_buttons = new JPanel();
+		bottom_buttons.setOpaque(false);
+		bottom_buttons.add(fight);
+		bottom_buttons.add(clconsole);
+				
+		center_battle = new JPanelBackground();
+		center_battle.setBackgroundI("images/dbz.jpg");
+		center_battle.setLayout(new BoxLayout(center_battle, BoxLayout.Y_AXIS));
+		center_battle.add(top_buttons);
+		center_battle.add(center_general);
+		center_battle.add(bottom_buttons);
+		
+		//Terminal
+		txtConsole = new JTextArea(7,0);
+		txtConsole.setEditable(false);
+        JScrollPane jsp = new JScrollPane(txtConsole);
+        jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        PrintStream out = new PrintStream( new ConsoleJFrame( txtConsole ));
+        System.setOut( out );       
+        
+        add(center_battle, BorderLayout.CENTER);
+		add(jsp,BorderLayout.SOUTH);
+        
+		setVisible(true);	
+	}
