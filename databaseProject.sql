@@ -56,9 +56,12 @@ create table ranking (
     player_id int(3),
     warrior_id int(3),
     puntuation int (5),
+    warrior_name varchar (25),
+    weapon_name varchar (25),
     constraint fk_ranking_playerid foreign key (player_id) references players (player_id), 
     constraint fk_ranking_warriorid foreign key (warrior_id) references warriors (warrior_id)
 );
+
 insert into race(race_name,hp,strength,defense,agility,speed) values
 ("Dwarf",60,6,4,5,3),
 ("Human",50,5,3,6,5),
