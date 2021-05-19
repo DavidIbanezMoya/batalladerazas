@@ -1,0 +1,63 @@
+class WarriorSelectWindow extends JFrame{
+		
+		public WarriorSelectWindow() {
+			
+			disableAllButtons();
+//			Create an ArrayList with all warriors
+			warriors = new WarriorContainer().getWarriors();
+//			warrior = warriors.get(0);
+			setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+			setSize(1310,800);
+			setLocationRelativeTo(null);
+			warriors_panel = new JPanel();
+			JPanelBackground back = new JPanelBackground();
+			back.setBackgroundI("images/back.jpg");
+			warriors_panel.setOpaque(false);
+			
+			phrase = new JLabel("Choose your warrior");
+			phrase.setForeground( Color.WHITE);
+			phrase.setFont(new Font("Times New Roman", Font.BOLD, 30));
+			
+			back.add(phrase);
+			back.add(Box.createVerticalStrut(70));
+			rows = (int)warriors.size()/4;
+			
+			if (warriors.size()%4!=0) {
+				rows++;
+			}
+			warriors_panel.setPreferredSize(new Dimension(1270, 200*rows + 20*(rows-1)));
+			
+			for (Warrior unit: warriors) {
+				Toolkit tools = Toolkit.getDefaultToolkit();
+		        Image icon = tools.getImage(unit.getImage());
+		        Image correctedImage = icon.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+		        ImageIcon imageIcon = new ImageIcon(correctedImage);
+		        button = new JButton(imageIcon);
+		        button.setToolTipText("<html><p>" + unit.getName() + "<br>Race: " + unit.getRace() + "<br>HP: " + unit.getHp() 
+		        					  + "<br>Power: " + unit.getStrength() + "<br>Speed: " + unit.getSpeed() + "<br>Agility: " 
+		        					  + unit.getAgility() + "<br>Defense: " + unit.getDefense() + "</p></html>");
+		        
+		        warriors_panel.add(button);
+			    button.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						warrior = unit;
+						user.characterImage(warrior.getImage());
+						user.getHealthpoints().setMaximum(warrior.getHp());
+						user.getHealthpoints().setValue(warrior.getHp());
+						user.getPowerbar().setValue(warrior.getStrength());
+						user.getDefensebar().setValue(warrior.getDefense());
+						user.getAgilitybar().setValue(warrior.getAgility());
+						user.getSpeedbar().setValue(warrior.getSpeed());
+						dispose();
+						new WeaponSelectWindow();
+						}
+					});
+			    	
+			}
+			warriors_panel.setLayout(new GridLayout(0,4,20,20));
+			back.add(warriors_panel);
+			add(back);
+			setVisible(true);
+		}
+	}
+		
