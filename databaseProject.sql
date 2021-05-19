@@ -56,9 +56,9 @@ create table ranking (
     player_id int(3),
     player_name varchar(200),
     warrior_id int(3),
-    puntuation int (5),
     warrior_name varchar (25),
     weapon_name varchar (25),
+    puntuation int (5),
     constraint fk_ranking_playerid foreign key (player_id) references players (player_id), 
     constraint fk_ranking_warriorid foreign key (warrior_id) references warriors (warrior_id)
 );
