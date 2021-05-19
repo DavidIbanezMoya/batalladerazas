@@ -54,6 +54,7 @@ create table battle (
 
 create table ranking (
     player_id int(3),
+    player_name varchar(200),
     warrior_id int(3),
     puntuation int (5),
     warrior_name varchar (25),
