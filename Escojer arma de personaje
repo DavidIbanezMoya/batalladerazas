@@ -1,0 +1,67 @@
+class WeaponSelectWindow extends JFrame{		
+		
+		public WeaponSelectWindow(){
+			disableAllButtons();
+			if (warrior != null) {
+				super.setVisible(false);
+				setResizable(false);
+				setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+				setLocation(310, 100);
+				weaponAvailable(warrior);
+
+				weapon_panel = new JPanel();
+				back = new JPanelBackground();
+				back.setBackgroundI("images/back2.jpg");
+				weapon_panel.setOpaque(false);
+				int rows = (int)weapon_available.size()/4;
+				
+				phrase = new JLabel("Choose your weapon");
+				phrase.setForeground( Color.WHITE);
+				phrase.setFont(new Font("Times New Roman", Font.BOLD, 30));
+				
+				back.add(phrase);
+				back.add(Box.createVerticalStrut(70));
+
+
+				if (weapon_available.size()%4!=0) {
+					rows++;
+				}
+				setSize(910,200*rows + 20*(rows-1) + 180);
+				weapon_panel.setPreferredSize(new Dimension(870, 200*rows + 20*(rows-1)));
+				
+				for (Weapon unit: weapon_available) {
+					Toolkit tools = Toolkit.getDefaultToolkit();
+			        Image icon = tools.getImage(unit.getImage());
+			        Image correctedImage = icon.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+			        ImageIcon imageIcon = new ImageIcon(correctedImage);
+			        button = new JButton(imageIcon);
+			        button.setToolTipText("<html><p>" + unit.getName() +  "<br>Power: " + unit.getStrength()
+			        					  + "<br>Speed: " + unit.getSpeed() + "</p></html>");
+			        
+			        weapon_panel.add(button);
+				    button.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							warrior_weapon = unit;
+							user.weaponImage(warrior_weapon.getImage());
+							user.getSpeedbar().setValue(warrior.getSpeed()+warrior_weapon.getSpeed());
+							user.getPowerbar().setValue(warrior.getStrength()+warrior_weapon.getStrength());
+							user.setDates(warrior, warrior_weapon);
+							dispose();
+							getRandomWarrior();
+							enableAllButtons();
+							
+						}
+						
+					});
+				}
+				weapon_panel.setLayout(new GridLayout(0,4,20,20));
+		
+				back.add(weapon_panel);
+				add(back, BorderLayout.CENTER);
+				setVisible(true);}
+			else {
+				showMessage("You can not choose your weapon without a warrior");
+				enableAllButtons();
+			}
+			}
+		}
