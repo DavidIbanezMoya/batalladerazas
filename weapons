@@ -1,0 +1,87 @@
+package Project_battle_races;
+
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+
+
+public class WeaponContainer extends Main{
+	//An arrayList of weapons is created
+	private ArrayList<Weapon> weapons = new ArrayList<Weapon>();
+	
+	public WeaponContainer() {
+		
+		try {
+			//The method needed to connect is called
+			createConnection();
+			//We select all the weapons
+			String query = "select * from weapons";
+			Statement stmt = conn.createStatement();
+			ResultSet rs1 = stmt.executeQuery(query);
+			//For every weapon in the table, we will add it to the ArrayList with the different fields
+			while(rs1.next()) {
+				weapons.add(new Weapon(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getInt(4), rs1.getInt(5),  rs1.getString(6)));
+				}
+			
+		} catch (SQLException e) {
+		System.out.println("Error de SQL.");
+		
+		}
+	
+	}
+	//Method which will return the ArrayList
+	public ArrayList<Weapon> getWeapons() {
+        return weapons;
+    }
+}
+
+//Class for a weapon is created
+class Weapon{
+	private int id ;
+	private String name;
+	private String image;
+	private int strength;
+	private int speed;
+	private String race;
+
+	//Constructor
+	public Weapon(int id, String name, String image, int strength, int speed, String race) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.strength = strength;
+		this.speed = speed;
+		this.race = race;
+	}
+	
+	
+	//Getters and setters
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public String getRace() {
+		return race;
+	}
+
+}
